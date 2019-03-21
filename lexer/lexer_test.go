@@ -166,3 +166,23 @@ func TestNextTokenForAdditionalKeywords(t *testing.T) {
 
 	doTestNextToken(input, tests, t)
 }
+
+func TestNextTokenForEqAndNotEq(t *testing.T) {
+	input := `10 == 10
+10 != 9
+`
+
+	tests := []tokenExpectation{
+		{token.INT, "10"},
+		{token.EQ, "=="},
+		{token.INT, "10"},
+
+		{token.INT, "10"},
+		{token.NOT_EQ, "!="},
+		{token.INT, "9"},
+
+		{token.EOF, ""},
+	}
+
+	doTestNextToken(input, tests, t)
+}
