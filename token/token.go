@@ -16,8 +16,15 @@ const (
 	INT   = "INT"   // 1343456
 
 	// 演算子
-	ASSIGN = "="
-	PLUS   = "+"
+	ASSIGN   = "="
+	PLUS     = "+"
+	MINUS    = "-"
+	BANG     = "!"
+	ASTERISK = "*"
+	SLASH    = "/"
+
+	LT = "<"
+	GT = ">"
 
 	// デリミタ
 	COMMA     = ","
@@ -32,3 +39,17 @@ const (
 	FUNCTION = "FUNCTION"
 	LET      = "LET"
 )
+
+var keywords = map[string]TokenType{
+	"fn":  FUNCTION,
+	"let": LET,
+}
+
+// keywordsテーブルをチェックし、渡された演算子がキーワードでないか確認する。
+func LookupIdent(ident string) TokenType {
+	if tok, ok := keywords[ident]; ok {
+		return tok
+	}
+
+	return IDENT
+}
